@@ -133,21 +133,26 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <footer className="py-6 bg-orange-950 text-white border-t border-amber-600/30 text-center space-y-1">
-        <p className="text-[10px] md:text-xs font-black uppercase tracking-tight text-amber-200">
+      <footer className="py-8 bg-orange-950 text-white border-t-2 border-amber-600/50 text-center space-y-2">
+        <p className="text-[10px] md:text-xs font-black uppercase tracking-widest text-amber-200">
           {language === 'en' ? TEMPLE_NAME_EN : TEMPLE_NAME_TE}
         </p>
-        <p className="text-[11px] md:text-sm text-amber-400 font-bold italic">
+        <p className="text-xs md:text-sm text-amber-400 font-black italic">
           లోకా సమస్తా సుఖినో భవంతు
         </p>
-        <div className="pt-2">
+        <div className="pt-4 pb-2">
           <a 
             href="https://vantixio.com" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="text-[8px] font-black text-amber-100/30 uppercase tracking-[0.4em] hover:text-amber-100/60 transition-colors"
+            className="group flex flex-col items-center gap-1"
           >
-            Powered by Vantixio
+            <span className="text-[8px] font-black text-amber-100/20 uppercase tracking-[0.5em] group-hover:text-amber-100/40 transition-colors">
+              Powered by
+            </span>
+            <span className="text-[10px] font-black text-amber-100/40 uppercase tracking-widest group-hover:text-amber-400 transition-all">
+              Vantixio
+            </span>
           </a>
         </div>
       </footer>

@@ -1,0 +1,5 @@
+{
+  "name": "Temple Devotee Manager",
+  "description": "An MVP application for the Go-Govinda Kalpavruksha Narasimha Salagrama Temple to manage devotee records and receive daily blessings reminders.",
+  "requestFramePermissions": []
+}

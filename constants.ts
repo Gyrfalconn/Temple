@@ -1,6 +1,7 @@
 
 export const TEMPLE_NAME_EN = "Go-Govinda Kalpavruksha Narasimha Salagrama Temple";
 export const TEMPLE_NAME_TE = "గో-గోవింద కల్పవృక్ష నరసింహ సాలగ్రామ క్షేత్రం";
+export const TEMPLE_SLOGAN_TE = "ఓం ఉగ్రం వీరం మహావిష్ణుం జ్వలంతం సర్వతోముఖం | నృసింహం భీషణం భద్రం మృత్యుమృత్యుం నమామ్యహం";
 
 export const GOTHRAMS = [
   "Select Gothram / గోత్రమును ఎంచుకోండి",
@@ -15,7 +16,7 @@ export const GOTHRAMS = [
   "Haritasa (హరితస)",
   "Gargeya (గార్గేయ)",
   "Srivatsa (శ్రీవత్స)",
-  "Moudgalya (మౌద్గల్య)",
+  "Moudgalya (ముద్గల)",
   "Vishnu (విష్ణు)",
   "Sounaka (శౌనక)",
   "Angirasa (అంగిరస)",
@@ -27,35 +28,138 @@ export const GOTHRAMS = [
   "Other / ఇతర"
 ];
 
+export const MONTHS_EN = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+export const MONTHS_TE = [
+  "జనవరి", "ఫిబ్రవరి", "మార్చి", "ఏప్రిల్", "మే", "జూన్",
+  "జూలై", "ఆగస్టు", "సెప్టెంబర్", "అక్టోబర్", "నవంబర్", "డిసెంబర్"
+];
+
 export const STORAGE_KEY = 'temple_devotees_data';
 
-const getRelativeDateString = (year: number, monthOffset = 0, dayOffset = 0) => {
+/**
+ * Helper to get a stable YYYY-MM-DD string in LOCAL time.
+ * Avoids the common toISOString() timezone offset bug.
+ */
+export const getLocalISOString = (date: Date = new Date()) => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+};
+
+// Helper to get relative date strings for mock data
+const getRelativeDate = (days: number, yearOffset: number = -30) => {
   const d = new Date();
-  d.setFullYear(year);
-  d.setMonth(d.getMonth() + monthOffset);
-  d.setDate(d.getDate() + dayOffset);
-  return d.toISOString().split('T')[0];
+  d.setDate(d.getDate() + days);
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const year = d.getFullYear() + yearOffset;
+  return `${year}-${month}-${day}`;
 };
 
 export const MOCK_DEVOTEES = [
-  { id: "1", fullName: "P. Rama Krishna / పి. రామకృష్ణ", phoneNumber: "9848022338", gothram: "Bharadwaja (భరద్వాజ)", address: "Ameerpet", dateOfBirth: getRelativeDateString(1985, 0, 0), marriageDate: getRelativeDateString(2010, 0, -5), notes: "", createdAt: new Date().toISOString() },
-  { id: "2", fullName: "S. Lakshmi Devi / ఎస్. లక్ష్మీ దేవి", phoneNumber: "9988776655", gothram: "Kasyapa (కాశ్యప)", address: "Jubilee Hills", dateOfBirth: getRelativeDateString(1990, 0, -1), marriageDate: getRelativeDateString(2015, 0, 0), notes: "", createdAt: new Date().toISOString() },
-  { id: "3", fullName: "V. Srinivasa Rao / వి. శ్రీనివాస రావు", phoneNumber: "9440123456", gothram: "Athreya (ఆత్రేయ)", address: "Kukatpally", dateOfBirth: getRelativeDateString(1978, 0, 2), marriageDate: getRelativeDateString(2005, 0, 10), notes: "", createdAt: new Date().toISOString() },
-  { id: "4", fullName: "K. Parvati / కె. పార్వతి", phoneNumber: "9123456789", gothram: "Vasistha (వసిష్ఠ)", address: "Secunderabad", dateOfBirth: getRelativeDateString(1992, 0, 5), notes: "", createdAt: new Date().toISOString() },
-  { id: "5", fullName: "M. Venkatesh / ఎం. వెంకటేష్", phoneNumber: "9866554433", gothram: "Sandilya (శాండిల్య)", address: "Hitech City", dateOfBirth: getRelativeDateString(1988, 0, 0), marriageDate: getRelativeDateString(2012, 0, 0), notes: "", createdAt: new Date().toISOString() },
-  { id: "6", fullName: "B. Satyanarayana / బి. సత్యనారాయణ", phoneNumber: "9900112233", gothram: "Vishnu (విష్ణు)", address: "Warangal", dateOfBirth: getRelativeDateString(1965, 1, 0), marriageDate: getRelativeDateString(1990, 1, 0), notes: "", createdAt: new Date().toISOString() },
-  { id: "7", fullName: "T. Anusuya / టి. అనసూయ", phoneNumber: "9701231234", gothram: "Kausika (కౌశిక)", address: "Vijayawada", dateOfBirth: getRelativeDateString(1970, 0, -5), marriageDate: getRelativeDateString(1995, 0, 5), notes: "", createdAt: new Date().toISOString() },
-  { id: "8", fullName: "G. Mahesh Babu / జి. మహేష్ బాబు", phoneNumber: "9000012345", gothram: "Bharadwaja (భరద్వాజ)", address: "Guntur", dateOfBirth: getRelativeDateString(1982, 0, 10), notes: "", createdAt: new Date().toISOString() },
-  { id: "9", fullName: "D. Saroja / డి. సరోజ", phoneNumber: "9849098490", gothram: "Gautama (గౌతమ)", address: "Tirupati", dateOfBirth: getRelativeDateString(1975, 0, 0), marriageDate: getRelativeDateString(2000, 0, 0), notes: "", createdAt: new Date().toISOString() },
-  { id: "10", fullName: "R. Narayana Murthy / ఆర్. నారాయణ మూర్తి", phoneNumber: "9550123456", gothram: "Agastya (అగస్త్య)", address: "Vizag", dateOfBirth: getRelativeDateString(1950, -1, 0), marriageDate: getRelativeDateString(1975, -1, 0), notes: "", createdAt: new Date().toISOString() },
-  { id: "11", fullName: "N. Chandra Babu / ఎన్. చంద్ర బాబు", phoneNumber: "9100100100", gothram: "Srivatsa (శ్రీవత్స)", address: "Nellore", dateOfBirth: getRelativeDateString(1980, 0, 15), marriageDate: getRelativeDateString(2008, 0, 15), notes: "", createdAt: new Date().toISOString() },
-  { id: "12", fullName: "L. Sita / ఎల్. సీత", phoneNumber: "9220022002", gothram: "Bharadwaja (భరద్వాజ)", address: "Kurnool", dateOfBirth: getRelativeDateString(1995, 0, -15), notes: "", createdAt: new Date().toISOString() },
-  { id: "13", fullName: "A. Arjun Rao / ఎ. అర్జున్ రావు", phoneNumber: "9330033003", gothram: "Sandilya (శాండిల్య)", address: "Kadapa", dateOfBirth: getRelativeDateString(1988, 0, 20), marriageDate: getRelativeDateString(2014, 0, 20), notes: "", createdAt: new Date().toISOString() },
-  { id: "14", fullName: "Y. Rajasekhar / వై. రాజశేఖర్", phoneNumber: "9440044004", gothram: "Kasyapa (కాశ్యప)", address: "Anantapur", dateOfBirth: getRelativeDateString(1972, 2, 0), marriageDate: getRelativeDateString(1998, 2, 0), notes: "", createdAt: new Date().toISOString() },
-  { id: "15", fullName: "J. Jagan Mohan / జె. జగన్ మోహన్", phoneNumber: "9550055005", gothram: "Athreya (ఆత్రేయ)", address: "Chittoor", dateOfBirth: getRelativeDateString(1983, 0, -20), marriageDate: getRelativeDateString(2011, 0, -20), notes: "", createdAt: new Date().toISOString() },
-  { id: "16", fullName: "K. Pawan Kalyan / కె. పవన్ కళ్యాణ్", phoneNumber: "9660066006", gothram: "Vasistha (వసిష్ఠ)", address: "Eluru", dateOfBirth: getRelativeDateString(1989, 0, 25), notes: "", createdAt: new Date().toISOString() },
-  { id: "17", fullName: "S. Balakrishna / ఎస్. బాలకృష్ణ", phoneNumber: "9770077007", gothram: "Gautama (గౌతమ)", address: "Kakinada", dateOfBirth: getRelativeDateString(1968, 0, 30), marriageDate: getRelativeDateString(1994, 0, 30), notes: "", createdAt: new Date().toISOString() },
-  { id: "18", fullName: "C. Chiranjeevi / సి. చిరంజీవి", phoneNumber: "9880088008", gothram: "Bharadwaja (భరద్వాజ)", address: "Rajahmundry", dateOfBirth: getRelativeDateString(1974, -2, 0), marriageDate: getRelativeDateString(1980, -2, 0), notes: "", createdAt: new Date().toISOString() },
-  { id: "19", fullName: "N. NTR Rao / ఎన్. ఎన్టీఆర్ రావు", phoneNumber: "9990099009", gothram: "Srivatsa (శ్రీవత్స)", address: "Nizamabad", dateOfBirth: getRelativeDateString(1991, 0, -30), marriageDate: getRelativeDateString(2016, 0, -30), notes: "", createdAt: new Date().toISOString() },
-  { id: "20", fullName: "M. Mohan Babu / ఎం. మోహన్ బాబు", phoneNumber: "9000000001", gothram: "Agastya (అగస్త్య)", address: "Ongole", dateOfBirth: getRelativeDateString(1976, 0, 1), marriageDate: getRelativeDateString(2002, 0, 1), notes: "", createdAt: new Date().toISOString() }
+  {
+    id: 'm1',
+    fullName: 'Ananthacharya / అనంతాచార్య',
+    dateOfBirth: getRelativeDate(0, -40), // Birthday Today
+    marriageDate: getRelativeDate(-5, -10),
+    wifeName: 'Lakshmi / లక్ష్మి',
+    wifeDOB: getRelativeDate(15, -38),
+    children: [{ name: 'Srinivasa', dob: getRelativeDate(1, -8) }], // Child Birthday Tomorrow
+    gothram: 'Bharadwaja (భరద్వాజ)',
+    phoneNumber: '9848012345',
+    address: 'Kukatpally, Hyderabad',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm2',
+    fullName: 'Ramesh Sharma / రమేష్ శర్మ',
+    dateOfBirth: getRelativeDate(-50, -45),
+    marriageDate: getRelativeDate(0, -20), // Anniversary Today
+    wifeName: 'Saraswati / సరస్వతి',
+    wifeDOB: getRelativeDate(1, -42), // Spouse Birthday Tomorrow
+    children: [{ name: 'Aditya', dob: getRelativeDate(12, -15) }],
+    gothram: 'Kasyapa (కాశ్యప)',
+    phoneNumber: '9123456789',
+    address: 'Miyapur, Hyderabad',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm3',
+    fullName: 'Venkat Reddy / వెంకట్ రెడ్డి',
+    dateOfBirth: getRelativeDate(1, -35), // Birthday Tomorrow
+    marriageDate: getRelativeDate(5, -12), // Anniversary in 5 days
+    wifeName: 'Gauri / గౌరీ',
+    wifeDOB: getRelativeDate(0, -33), // Spouse Birthday Today
+    children: [],
+    gothram: 'Athreya (ఆత్రేయ)',
+    phoneNumber: '8888899999',
+    address: 'Gachibowli, Hyderabad',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm4',
+    fullName: 'Satyanarayana / సత్యనారాయణ',
+    dateOfBirth: getRelativeDate(-10, -60),
+    marriageDate: getRelativeDate(-200, -35),
+    wifeName: 'Annapurna / అన్నపూర్ణ',
+    wifeDOB: getRelativeDate(-5, -58),
+    children: [
+      { name: 'Kalyan', dob: getRelativeDate(0, -30) } // Child Birthday Today
+    ],
+    gothram: 'Vasistha (వసిష్ఠ)',
+    phoneNumber: '7777766666',
+    address: 'Banjara Hills, Hyderabad',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm5',
+    fullName: 'Krishna Murthy / కృష్ణ మూర్తి',
+    dateOfBirth: getRelativeDate(25, -50),
+    marriageDate: getRelativeDate(0, -25), // Anniversary Today
+    wifeName: 'Radha / రాధ',
+    wifeDOB: getRelativeDate(4, -48),
+    children: [{ name: 'Hari', dob: getRelativeDate(1, -5) }], // Child Birthday Tomorrow
+    gothram: 'Srivatsa (శ్రీవత్స)',
+    phoneNumber: '9900112233',
+    address: 'Secunderabad',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm6',
+    fullName: 'Srinivas Rao / శ్రీనివాస్ రావు',
+    dateOfBirth: getRelativeDate(0, -42), // Birthday Today
+    marriageDate: getRelativeDate(20, -15),
+    wifeName: 'Padma / పద్మ',
+    wifeDOB: getRelativeDate(-12, -40),
+    children: [{ name: 'Deepak', dob: getRelativeDate(10, -10) }],
+    gothram: 'Gautama (గౌతమ)',
+    phoneNumber: '9885012345',
+    address: 'Dilsukhnagar, Hyderabad',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm7',
+    fullName: 'Praveen Kumar / ప్రవీణ్ కుమార్',
+    dateOfBirth: getRelativeDate(6, -33),
+    marriageDate: getRelativeDate(1, -8), // Anniversary Tomorrow
+    wifeName: 'Siri / సిరి',
+    wifeDOB: getRelativeDate(22, -30),
+    children: [],
+    gothram: 'Haritasa (హరితస)',
+    phoneNumber: '9550011223',
+    address: 'Madhapur, Hyderabad',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  }
 ];

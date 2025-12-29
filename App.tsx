@@ -8,7 +8,7 @@ import { DevoteeList } from './components/DevoteeList.tsx';
 import { DevoteeDetails } from './components/DevoteeDetails.tsx';
 import { Devotee, ViewState, Language, CallRecord } from './types.ts';
 import { getDevotees, saveDevotee, deleteDevotee, updateDevotee } from './services/storageService.ts';
-import { TEMPLE_NAME_EN, TEMPLE_NAME_TE, TEMPLE_SLOGAN_TE } from './constants.ts';
+import { TEMPLE_NAME_TE, TEMPLE_SUB_NAME_TE, TEMPLE_ADDRESS_TE, TEMPLE_TAGLINE_TE } from './constants.ts';
 
 const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('reminders');
@@ -16,8 +16,6 @@ const App: React.FC = () => {
   const [devotees, setDevotees] = useState<Devotee[]>([]);
   const [editingDevotee, setEditingDevotee] = useState<Devotee | null>(null);
   const [selectedDevoteeId, setSelectedDevoteeId] = useState<string | null>(null);
-
-  const isEn = language === 'en';
 
   useEffect(() => {
     setDevotees(getDevotees());
@@ -67,9 +65,15 @@ const App: React.FC = () => {
   }, [language, selectedDevoteeId]);
 
   const handleEdit = useCallback((devotee: Devotee) => {
-    setEditingDevotee(devotee);
-    setView('add');
-  }, []);
+    const msg = language === 'en' 
+      ? "Are you sure you want to edit this devotee record?" 
+      : "మీరు ఈ భక్తుని రికార్డును సవరించాలనుకుంటున్నారా?";
+    
+    if (window.confirm(msg)) {
+      setEditingDevotee(devotee);
+      setView('add');
+    }
+  }, [language]);
 
   const handleViewDetails = useCallback((id: string) => {
     setSelectedDevoteeId(id);
@@ -103,42 +107,40 @@ const App: React.FC = () => {
   const currentDevotee = devotees.find(d => d.id === selectedDevoteeId);
 
   return (
-    <div className="min-h-screen bg-amber-50/20 flex flex-col selection:bg-orange-500 selection:text-white">
+    <div className="min-h-screen bg-[#fffaf5] flex flex-col selection:bg-red-600 selection:text-white">
       <div className="no-print">
         <Header currentView={view} setView={handleSetView} language={language} setLanguage={handleLanguageChange} />
       </div>
       
-      <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-4 md:py-6">
-        <div className={view !== 'reminders' && view !== 'upcoming' && view !== 'directory' ? "" : ""}>
-          {view === 'reminders' && (
-            <DailyReminders 
-              devotees={devotees} 
-              language={language} 
-              onViewAllUpcoming={() => setView('upcoming')} 
-              onToggleCall={handleToggleCall}
-              onViewDetails={handleViewDetails}
-            />
-          )}
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-6 md:py-8">
+        {view === 'reminders' && (
+          <DailyReminders 
+            devotees={devotees} 
+            language={language} 
+            onViewAllUpcoming={() => setView('upcoming')} 
+            onToggleCall={handleToggleCall}
+            onViewDetails={handleViewDetails}
+          />
+        )}
 
-          {view === 'upcoming' && (
-            <UpcomingEvents 
-              devotees={devotees} 
-              language={language} 
-              onToggleCall={handleToggleCall}
-              onViewDetails={handleViewDetails}
-            />
-          )}
-          
-          {view === 'directory' && (
-            <DevoteeList 
-              devotees={devotees} 
-              onDelete={handleDelete} 
-              onEdit={handleEdit} 
-              onViewDetails={handleViewDetails}
-              language={language} 
-            />
-          )}
-        </div>
+        {view === 'upcoming' && (
+          <UpcomingEvents 
+            devotees={devotees} 
+            language={language} 
+            onToggleCall={handleToggleCall}
+            onViewDetails={handleViewDetails}
+          />
+        )}
+        
+        {view === 'directory' && (
+          <DevoteeList 
+            devotees={devotees} 
+            onDelete={handleDelete} 
+            onEdit={handleEdit} 
+            onViewDetails={handleViewDetails}
+            language={language} 
+          />
+        )}
         
         <div className="no-print">
           {view === 'add' && (
@@ -146,6 +148,7 @@ const App: React.FC = () => {
               onSave={handleSave} 
               language={language} 
               editingDevotee={editingDevotee} 
+              devotees={devotees}
               onCancel={() => { setEditingDevotee(null); setView('directory'); }}
             />
           )}
@@ -162,27 +165,17 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      <footer className="no-print py-6 bg-[#7c2d12] text-white border-t border-amber-400/20 text-center space-y-2 px-4 shadow-[0_-10px_25px_rgba(0,0,0,0.1)]">
-        <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-[#fbbf24] leading-none">
-          {isEn ? TEMPLE_NAME_EN : TEMPLE_NAME_TE}
-        </p>
-        <p className="text-[10px] md:text-[11px] text-amber-50/80 font-medium italic max-w-2xl mx-auto leading-tight">
-          {TEMPLE_SLOGAN_TE}
-        </p>
-        <div className="pt-3 border-t border-white/10 inline-block mx-auto px-6">
-          <a 
-            href="https://vantixio.com" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity group"
-          >
-            <span className="text-[8px] font-bold text-amber-100 uppercase tracking-[0.2em]">
-              Powered by
-            </span>
-            <span className="text-[10px] font-black text-[#fbbf24] uppercase tracking-widest group-hover:text-white transition-colors">
-              Vantixio
-            </span>
-          </a>
+      <footer className="no-print bg-[#450a0a] text-white border-t border-amber-400/20 px-4" style={{ height: '1.5cm' }}>
+        <div className="max-w-[1600px] mx-auto h-full flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-1 md:gap-4">
+          <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
+            <span className="text-[10px] md:text-[11px] font-black text-amber-400 font-telugu uppercase tracking-tight leading-none">{TEMPLE_NAME_TE}</span>
+            <span className="hidden md:block w-[1px] h-3 bg-white/20"></span>
+            <span className="text-[7px] md:text-[9px] font-medium font-telugu opacity-60 leading-none">{TEMPLE_ADDRESS_TE}</span>
+          </div>
+          <div className="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
+            <span className="text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-none">Developed by</span>
+            <a href="https://vantixio.com" target="_blank" rel="noopener noreferrer" className="text-[12px] md:text-[15px] font-black text-amber-400 hover:text-white transition-colors tracking-widest leading-none">VANTIXIO</a>
+          </div>
         </div>
       </footer>
 

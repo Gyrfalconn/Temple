@@ -1,5 +1,5 @@
 {
-  "name": "temple-devotee-manager",
+  "name": "సఖలాభీష్ఠసిద్ధిరస్తు",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -14,7 +14,8 @@
     "lucide-react": "0.460.0",
     "xlsx": "0.18.5",
     "jspdf": "2.5.1",
-    "jspdf-autotable": "3.8.2"
+    "jspdf-autotable": "3.8.2",
+    "sanscript": "latest"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

@@ -47,7 +47,7 @@ export const DevoteeDetails: React.FC<DevoteeDetailsProps> = ({ devotee, languag
       [getLabel('Gothram', 'గోత్రం'), fText(devotee.gothram)],
       [getLabel('Date of Birth', 'పుట్టిన తేదీ'), devotee.dateOfBirth],
       [getLabel('Spouse Name', 'భార్య పేరు'), fText(devotee.wifeName || '-')],
-      [getLabel('Spouse DOB', 'భార్య పుట్టిన తేదీ'), devotee.wifeDOB || '-')],
+      [getLabel('Spouse DOB', 'భార్య పుట్టిన తేదీ'), devotee.wifeDOB || '-'],
       [getLabel('Marriage Date', 'వివాహ తేదీ'), devotee.marriageDate || '-'],
       [getLabel('Address', 'చిరునామా'), fText(devotee.address || '-')],
       [getLabel('Family Members', 'కుటుంబ సభ్యులు'), (devotee.children || []).map(c => `${fText(c.name)} (${c.dob})`).join('\n') || '-']
@@ -58,7 +58,6 @@ export const DevoteeDetails: React.FC<DevoteeDetailsProps> = ({ devotee, languag
       body: body,
       theme: 'grid',
       headStyles: { fillColor: [124, 45, 18] },
-      // Use 'cellWidth' instead of 'width' for jspdf-autotable styles
       columnStyles: { 0: { fontStyle: 'bold', cellWidth: 50 } }
     });
     doc.save(`${fText(devotee.fullName).replace(/\s/g, '_')}_Profile.pdf`);

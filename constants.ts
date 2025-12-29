@@ -1,4 +1,3 @@
-
 export const TEMPLE_NAME_TE = "శ్రీ నృసింహ సేవా వాహిని";
 export const TEMPLE_SUB_NAME_TE = "గో - గోవిందా కల్పవృక్ష నారసింహ సాలగ్రామ ఆశ్రమం";
 export const TEMPLE_ADDRESS_TE = "శ్రీ అహోబిల మఠం పక్కన , రామాలయం దగ్గర భద్రాచలం";
@@ -68,29 +67,153 @@ const getRelativeDate = (days: number, yearOffset: number = -30) => {
 export const MOCK_DEVOTEES = [
   {
     id: 'm1',
-    fullName: 'Ananthacharya / అనంతాచార్య',
-    dateOfBirth: getRelativeDate(0, -40),
-    marriageDate: getRelativeDate(-5, -10),
-    wifeName: 'Lakshmi / లక్ష్మి',
-    wifeDOB: getRelativeDate(15, -38),
-    children: [{ name: 'Srinivasa', dob: getRelativeDate(1, -8) }],
+    fullName: 'Anantha Rama Rao / అనంత రామారావు',
+    dateOfBirth: getRelativeDate(0, -45), // Birthday TODAY
+    marriageDate: getRelativeDate(-10, -20),
+    wifeName: 'Lakshmi Devi / లక్ష్మి దేవి',
+    wifeDOB: getRelativeDate(15, -42),
+    children: [
+      { name: 'Srinivasa / శ్రీనివాస', dob: getRelativeDate(5, -12) },
+      { name: 'Padmavathi / పద్మావతి', dob: getRelativeDate(-20, -8) }
+    ],
     gothram: 'Bharadwaja (భరద్వాజ)',
     phoneNumber: '9848012345',
-    address: 'Kukatpally, Hyderabad',
+    address: 'Sannidhi Street, Bhadrachalam',
     createdAt: new Date().toISOString(),
     callHistory: []
   },
   {
     id: 'm2',
-    fullName: 'Ramesh Sharma / రమేష్ శర్మ',
-    dateOfBirth: getRelativeDate(-50, -45),
-    marriageDate: getRelativeDate(0, -20),
-    wifeName: 'Saraswati / సరస్వతి',
-    wifeDOB: getRelativeDate(1, -42),
-    children: [{ name: 'Aditya', dob: getRelativeDate(12, -15) }],
+    fullName: 'Venkatasubba Rao / వెంకటసుబ్బా రావు',
+    dateOfBirth: getRelativeDate(-50, -55),
+    marriageDate: getRelativeDate(0, -25), // Anniversary TODAY
+    wifeName: 'Saraswathi / సరస్వతి',
+    wifeDOB: getRelativeDate(2, -50),
+    children: [{ name: 'Kalyan / కళ్యాణ్', dob: getRelativeDate(12, -22) }],
     gothram: 'Kasyapa (కాశ్యప)',
     phoneNumber: '9123456789',
     address: 'Miyapur, Hyderabad',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm3',
+    fullName: 'Narayana Murthy / నారాయణ మూర్తి',
+    dateOfBirth: getRelativeDate(1, -40), // Birthday TOMORROW
+    marriageDate: getRelativeDate(15, -15),
+    wifeName: 'Sita / సీత',
+    wifeDOB: getRelativeDate(-10, -38),
+    children: [],
+    gothram: 'Athreya (ఆత్రేయ)',
+    phoneNumber: '9988776655',
+    address: 'Temple View Colony, Bhadrachalam',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm4',
+    fullName: 'Gopal Krishna / గోపాల్ కృష్ణ',
+    dateOfBirth: getRelativeDate(5, -35), // Birthday in 5 days
+    marriageDate: getRelativeDate(1, -10), // Anniversary TOMORROW
+    wifeName: 'Radha / రాధ',
+    wifeDOB: getRelativeDate(-5, -32),
+    children: [{ name: 'Krishna / కృష్ణ', dob: getRelativeDate(0, -5) }],
+    gothram: 'Srivatsa (శ్రీవత్స)',
+    phoneNumber: '9000123456',
+    address: 'Kukatpally, Hyderabad',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm5',
+    fullName: 'Subrahmanya Sharma / సుబ్రహ్మణ్య శర్మ',
+    dateOfBirth: getRelativeDate(-15, -60),
+    marriageDate: getRelativeDate(4, -30), // Anniversary in 4 days
+    wifeName: 'Annapurna / అన్నపూర్ణ',
+    wifeDOB: getRelativeDate(20, -58),
+    children: [
+      { name: 'Kartikeya / కార్తికేయ', dob: getRelativeDate(2, -25) },
+      { name: 'Ganesha / గణేశ', dob: getRelativeDate(10, -20) }
+    ],
+    gothram: 'Gautama (గౌతమ)',
+    phoneNumber: '8888777766',
+    address: 'Brahmana Veedhi, Bhadrachalam',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm6',
+    fullName: 'Arjuna Rao / అర్జున రావు',
+    dateOfBirth: getRelativeDate(10, -38), // Birthday in 10 days
+    marriageDate: getRelativeDate(-100, -12),
+    wifeName: 'Draupadi / ద్రౌపది',
+    wifeDOB: getRelativeDate(50, -35),
+    children: [{ name: 'Abhimanyu / అభిమన్యు', dob: getRelativeDate(25, -10) }],
+    gothram: 'Vasistha (వసిష్ఠ)',
+    phoneNumber: '7776665554',
+    address: 'Gachibowli, Hyderabad',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm7',
+    fullName: 'Srinivasulu / శ్రీనివాసులు',
+    dateOfBirth: getRelativeDate(20, -32), // Birthday in 20 days
+    marriageDate: '', // Single Devotee
+    wifeName: '',
+    wifeDOB: '',
+    children: [],
+    gothram: 'Sandilya (శాండిల్య)',
+    phoneNumber: '9555444333',
+    address: 'Ramalayam Area, Bhadrachalam',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm8',
+    fullName: 'Govinda Rajulu / గోవింద రాజులు',
+    dateOfBirth: getRelativeDate(-200, -48),
+    marriageDate: getRelativeDate(12, -20), // Anniversary in 12 days
+    wifeName: 'Andal / ఆండాళ్',
+    wifeDOB: getRelativeDate(-10, -45),
+    children: [
+      { name: 'Ranganath / రంగనాథ్', dob: getRelativeDate(1, -15) },
+      { name: 'Varada / వరద', dob: getRelativeDate(15, -12) },
+      { name: 'Yadagiri / యాదగిరి', dob: getRelativeDate(8, -8) }
+    ],
+    gothram: 'Vishnu (విష్ణు)',
+    phoneNumber: '9444333222',
+    address: 'Ashram Road, Bhadrachalam',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm9',
+    fullName: 'Hanumantha Rao / హనుమంత రావు',
+    dateOfBirth: getRelativeDate(25, -50), // Birthday in 25 days
+    marriageDate: getRelativeDate(2, -28), // Anniversary in 2 days
+    wifeName: 'Anjana / అంజన',
+    wifeDOB: getRelativeDate(0, -48),
+    children: [],
+    gothram: 'Angirasa (అంగిరస)',
+    phoneNumber: '9333222111',
+    address: 'Old Town, Bhadrachalam',
+    createdAt: new Date().toISOString(),
+    callHistory: []
+  },
+  {
+    id: 'm10',
+    fullName: 'Parvathi Devi / పార్వతి దేవి',
+    dateOfBirth: getRelativeDate(3, -38), // Birthday in 3 days
+    marriageDate: getRelativeDate(-5, -15),
+    wifeName: 'Shiva / శివ',
+    wifeDOB: getRelativeDate(3, -40),
+    children: [
+      { name: 'Shanmukha / షణ్ముఖ', dob: getRelativeDate(10, -10) }
+    ],
+    gothram: 'Agastya (అగస్త్య)',
+    phoneNumber: '9222111000',
+    address: 'Hill View, Bhadrachalam',
     createdAt: new Date().toISOString(),
     callHistory: []
   }

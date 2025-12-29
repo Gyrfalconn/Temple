@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Devotee, Language, Child } from '../types.ts';
 import { X, UserPlus, Users, AlertTriangle, Plus, Trash2, Home, UserCircle } from 'lucide-react';
@@ -60,7 +61,7 @@ const TransliteratedInput: React.FC<{
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}
         placeholder={placeholder}
-        rows={3}
+        rows={2}
       />
     );
   }
@@ -159,132 +160,126 @@ export const DevoteeForm: React.FC<DevoteeFormProps> = ({ onSave, language, edit
     });
   };
 
-  const inputStyles = "w-full h-11 px-4 border border-red-100 rounded-xl text-sm font-bold text-red-950 bg-[#fffaf5] focus:ring-1 focus:ring-red-800 outline-none transition-all font-telugu";
-  const textareaStyles = "w-full px-4 py-3 border border-red-100 rounded-xl text-sm font-bold text-red-950 bg-[#fffaf5] focus:ring-1 focus:ring-red-800 outline-none transition-all font-telugu min-h-[100px]";
+  const inputStyles = "w-full h-9 px-3 border border-red-100 rounded-lg text-sm font-bold text-red-950 bg-[#fffaf5] focus:ring-1 focus:ring-red-800 outline-none transition-all font-telugu";
+  const textareaStyles = "w-full px-3 py-2 border border-red-100 rounded-lg text-sm font-bold text-red-950 bg-[#fffaf5] focus:ring-1 focus:ring-red-800 outline-none transition-all font-telugu min-h-[60px]";
 
   const SectionTitle = ({ icon: Icon, title, teTitle }: { icon: any, title: string, teTitle: string }) => (
-    <div className="flex items-center gap-2 mb-4 mt-8 first:mt-0">
-      <div className="p-1.5 bg-red-100 text-red-900 rounded-lg"><Icon className="w-4 h-4" /></div>
-      <h3 className="text-xs font-black uppercase tracking-widest text-red-900 font-telugu">{getLabel(title, teTitle)}</h3>
-      <div className="flex-1 h-px bg-red-50 ml-2"></div>
+    <div className="flex items-center gap-2 mb-3 mt-4 first:mt-0">
+      <div className="p-1 bg-red-100 text-red-900 rounded"><Icon className="w-3 h-3" /></div>
+      <h3 className="text-[10px] font-black uppercase tracking-wider text-red-900 font-telugu">{getLabel(title, teTitle)}</h3>
+      <div className="flex-1 h-px bg-red-50 ml-1"></div>
     </div>
   );
 
   return (
-    <div className="bg-white rounded-[24px] shadow-xl p-5 md:p-10 border-t-8 border-[#450a0a] max-w-5xl mx-auto mb-20">
-      <div className="flex justify-between items-start mb-8 pb-4 border-b border-red-50">
-        <div className="flex items-center gap-4">
-          <div className="p-3 bg-red-50 rounded-2xl text-red-900"><UserPlus className="w-6 h-6" /></div>
+    <div className="bg-white rounded-[20px] shadow-xl p-4 md:p-6 border-t-4 border-[#450a0a] max-w-5xl mx-auto mb-10">
+      <div className="flex justify-between items-start mb-4 pb-2 border-b border-red-50">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-red-50 rounded-lg text-red-900"><UserPlus className="w-5 h-5" /></div>
           <div>
-            <h2 className={`text-2xl font-black text-red-950 ${isTe ? 'font-telugu' : ''}`}>
-              {editingDevotee ? getLabel('Update Record', 'వివరాల సవరణ') : getLabel('Register Devotee', 'భక్తుని నమోదు')}
+            <h2 className={`text-xl font-black text-red-950 ${isTe ? 'font-telugu' : ''}`}>
+              {editingDevotee ? getLabel('Update Profile', 'ప్రొఫైల్ సవరణ') : getLabel('Enroll Devotee', 'భక్తుని నమోదు')}
             </h2>
-            <p className="text-[10px] font-bold text-red-900/40 uppercase tracking-widest mt-0.5">Hindu Temple Database Management</p>
           </div>
         </div>
         {onCancel && (
-          <button onClick={onCancel} className="p-2 hover:bg-red-50 rounded-xl transition-colors group">
-            <X className="w-6 h-6 text-gray-300 group-hover:text-red-500" />
+          <button onClick={onCancel} className="p-1.5 hover:bg-red-50 rounded-lg transition-colors">
+            <X className="w-5 h-5 text-gray-300 hover:text-red-500" />
           </button>
         )}
       </div>
 
       {error && (
-        <div className="mb-8 p-4 bg-red-50 text-red-800 rounded-2xl text-[11px] font-black border border-red-200 flex items-center gap-3 animate-pulse">
-          <AlertTriangle className="w-5 h-5 shrink-0" />
+        <div className="mb-4 p-3 bg-red-50 text-red-800 rounded-lg text-[10px] font-black border border-red-200 flex items-center gap-2">
+          <AlertTriangle className="w-4 h-4 shrink-0" />
           <span>{error}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Section 1: Personal Details */}
-        <SectionTitle icon={UserCircle} title="Personal Details" teTitle="వ్యక్తిగత వివరాలు" />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+      <form onSubmit={handleSubmit} className="space-y-3">
+        {/* Section 1: Personal Details - 3 Column Grid */}
+        <SectionTitle icon={UserCircle} title="Basic Information" teTitle="ప్రాథమిక వివరాలు" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-3">
           <div className="space-y-1">
-            <label className="text-[9px] font-black text-red-900/30 uppercase tracking-widest block ml-1">{getLabel('Full Name', 'పూర్తి పేరు')} *</label>
+            <label className="text-[8px] font-black text-red-900/40 uppercase tracking-widest block ml-1">{getLabel('Full Name', 'పూర్తి పేరు')} *</label>
             <TransliteratedInput language={language} className={inputStyles} value={formData.fullName} onChange={val => updateField('fullName', val)} />
           </div>
-          <ManualDateInput label={getLabel('Date of Birth', 'పుట్టిన తేదీ') + ' *'} value={formData.dateOfBirth} language={language} onChange={d => updateField('dateOfBirth', d)} />
           <div className="space-y-1">
-            <label className="text-[9px] font-black text-red-900/30 uppercase tracking-widest block ml-1">{getLabel('Gothram', 'గోత్రం')} *</label>
+            <ManualDateInput label={getLabel('Date of Birth', 'పుట్టిన తేదీ') + ' *'} value={formData.dateOfBirth} language={language} onChange={d => updateField('dateOfBirth', d)} />
+          </div>
+          <div className="space-y-1">
+            <label className="text-[8px] font-black text-red-900/40 uppercase tracking-widest block ml-1">{getLabel('Gothram', 'గోత్రం')} *</label>
             <TransliteratedInput language={language} className={inputStyles} value={formData.gothram} onChange={val => updateField('gothram', val)} />
           </div>
           <div className="space-y-1">
-            <label className="text-[9px] font-black text-red-900/30 uppercase tracking-widest block ml-1">{getLabel('Phone Number', 'ఫోన్ నంబర్')} *</label>
+            <label className="text-[8px] font-black text-red-900/40 uppercase tracking-widest block ml-1">{getLabel('Phone Number', 'ఫోన్ నంబర్')} *</label>
             <input type="tel" className={inputStyles} value={formData.phoneNumber} onChange={e => updateField('phoneNumber', e.target.value.replace(/\D/g, '').slice(0, 10))} />
           </div>
         </div>
 
-        {/* Section 2: Spouse Details */}
+        {/* Section 2: Spouse Details - 3 Column Grid */}
         <SectionTitle icon={Users} title="Spouse Details" teTitle="భార్య/భర్త వివరాలు" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-3">
           <div className="space-y-1">
-            <label className="text-[9px] font-black text-red-900/30 uppercase tracking-widest block ml-1">{getLabel('Spouse Name', 'భార్య పేరు')}</label>
+            <label className="text-[8px] font-black text-red-900/40 uppercase tracking-widest block ml-1">{getLabel('Spouse Name', 'భార్య పేరు')}</label>
             <TransliteratedInput language={language} className={inputStyles} value={formData.wifeName} onChange={val => updateField('wifeName', val)} />
           </div>
-          <ManualDateInput label={getLabel('Spouse DOB', 'భార్య పుట్టిన తేదీ')} value={formData.wifeDOB} language={language} onChange={d => updateField('wifeDOB', d)} />
-          <ManualDateInput label={getLabel('Marriage Date', 'వివాహ తేదీ')} value={formData.marriageDate} language={language} onChange={d => updateField('marriageDate', d)} />
+          <div className="space-y-1">
+            <ManualDateInput label={getLabel('Spouse DOB', 'భార్య పుట్టిన తేదీ')} value={formData.wifeDOB} language={language} onChange={d => updateField('wifeDOB', d)} />
+          </div>
+          <div className="space-y-1">
+            <ManualDateInput label={getLabel('Marriage Date', 'వివాహ తేదీ')} value={formData.marriageDate} language={language} onChange={d => updateField('marriageDate', d)} />
+          </div>
         </div>
 
-        {/* Section 3: Family Members (Children) */}
-        <div className="flex items-center justify-between mb-4 mt-8">
+        {/* Section 3: Family Members - Horizontal and Compact */}
+        <div className="flex items-center justify-between mt-4 mb-2">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 bg-red-100 text-red-900 rounded-lg"><Users className="w-4 h-4" /></div>
-            <h3 className="text-xs font-black uppercase tracking-widest text-red-900 font-telugu">{getLabel('Family Members / Children', 'కుటుంబ సభ్యులు / పిల్లలు')}</h3>
+            <div className="p-1 bg-red-100 text-red-900 rounded"><Users className="w-3 h-3" /></div>
+            <h3 className="text-[10px] font-black uppercase tracking-wider text-red-900 font-telugu">{getLabel('Family Members', 'కుటుంబ సభ్యులు')}</h3>
           </div>
-          <button type="button" onClick={addChild} className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl text-[10px] font-black uppercase hover:bg-black transition-all shadow-sm">
-            <Plus className="w-3.5 h-3.5" /> {getLabel('Add Member', 'సభ్యుడిని చేర్చు')}
+          <button type="button" onClick={addChild} className="flex items-center gap-1.5 px-3 py-1 bg-red-600 text-white rounded-lg text-[9px] font-black uppercase hover:bg-black transition-all">
+            <Plus className="w-3 h-3" /> {getLabel('Add', 'చేర్చు')}
           </button>
         </div>
         
-        {children.length === 0 ? (
-          <div className="p-8 border-2 border-dashed border-red-50 rounded-3xl text-center">
-            <p className="text-[10px] font-bold text-red-900/20 uppercase tracking-[0.2em] italic">No family members added yet</p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {children.map((child, idx) => (
-              <div key={idx} className="flex flex-col sm:flex-row gap-3 p-4 bg-red-50/30 rounded-2xl border border-red-100 items-end">
-                <div className="flex-1 space-y-1 w-full">
-                  <label className="text-[8px] font-black text-red-900/30 uppercase tracking-widest ml-1">{getLabel('Name', 'పేరు')}</label>
-                  <TransliteratedInput 
-                    language={language} 
-                    className={inputStyles} 
-                    value={child.name} 
-                    onChange={val => updateChild(idx, 'name', val)} 
-                  />
-                </div>
-                <div className="flex-1 w-full">
-                  <ManualDateInput 
-                    label={getLabel('Date of Birth', 'పుట్టిన తేదీ')} 
-                    value={child.dob} 
-                    language={language} 
-                    onChange={val => updateChild(idx, 'dob', val)} 
-                  />
-                </div>
-                <button type="button" onClick={() => removeChild(idx)} className="p-3 text-red-600 hover:bg-red-100 rounded-xl transition-colors">
-                  <Trash2 className="w-5 h-5" />
-                </button>
+        <div className="space-y-2">
+          {children.map((child, idx) => (
+            <div key={idx} className="flex items-end gap-3 p-2 bg-red-50/20 rounded-lg border border-red-50">
+              <div className="flex-[2] space-y-1">
+                <label className="text-[7px] font-black text-red-900/30 uppercase ml-1">{getLabel('Name', 'పేరు')}</label>
+                <TransliteratedInput language={language} className={inputStyles} value={child.name} onChange={val => updateChild(idx, 'name', val)} />
               </div>
-            ))}
-          </div>
-        )}
-
-        {/* Section 4: Residence (Moved to Last) */}
-        <SectionTitle icon={Home} title="Residence" teTitle="నివాసము" />
-        <div className="space-y-1">
-          <label className="text-[9px] font-black text-red-900/30 uppercase tracking-widest block ml-1">{getLabel('Full Address', 'చిరునామా')}</label>
-          <TransliteratedInput multiline language={language} className={textareaStyles} value={formData.address} onChange={val => updateField('address', val)} placeholder={getLabel("Enter complete address...", "పూర్తి చిరునామాను నమోదు చేయండి...")} />
+              <div className="flex-[1.5]">
+                <ManualDateInput label={getLabel('DOB', 'పుట్టిన తేదీ')} value={child.dob} language={language} onChange={val => updateChild(idx, 'dob', val)} />
+              </div>
+              <button type="button" onClick={() => removeChild(idx)} className="p-2 text-red-400 hover:text-red-700 transition-colors">
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          ))}
+          {children.length === 0 && (
+            <div className="py-2 text-center border border-dashed border-gray-100 rounded-lg">
+               <p className="text-[8px] font-bold text-gray-300 uppercase tracking-widest italic">Optional: No children added</p>
+            </div>
+          )}
         </div>
 
-        <div className="pt-10 flex gap-4">
+        {/* Section 4: Residence - Final and Compact */}
+        <SectionTitle icon={Home} title="Residence" teTitle="నివాసము" />
+        <div className="space-y-1">
+          <label className="text-[8px] font-black text-red-900/40 uppercase tracking-widest block ml-1">{getLabel('Full Address', 'చిరునామా')}</label>
+          <TransliteratedInput multiline language={language} className={textareaStyles} value={formData.address} onChange={val => updateField('address', val)} placeholder={getLabel("House No, Area, City...", "చిరునామా...")} />
+        </div>
+
+        <div className="pt-4 flex gap-3">
           {onCancel && (
-            <button type="button" onClick={onCancel} className="flex-1 py-4 border-2 border-red-100 text-red-900 rounded-2xl font-black uppercase tracking-widest hover:bg-red-50 transition-all font-telugu">
-              {getLabel('Cancel', 'రద్దు చేయి')}
+            <button type="button" onClick={onCancel} className="flex-1 py-3 border border-red-100 text-red-900 rounded-lg font-black uppercase text-[10px] tracking-widest hover:bg-red-50 transition-all font-telugu">
+              {getLabel('Cancel', 'రద్దు')}
             </button>
           )}
-          <button type="submit" className="flex-[2] py-4 bg-red-600 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-black transition-all shadow-xl active:scale-[0.98] font-telugu">
-            {editingDevotee ? getLabel('Update Record', 'సవరించు') : getLabel('Save Register Details', 'నమోదు చేయి')}
+          <button type="submit" className="flex-[2] py-3 bg-red-600 text-white rounded-lg font-black uppercase text-[10px] tracking-widest hover:bg-black transition-all shadow-lg active:scale-[0.98] font-telugu">
+            {editingDevotee ? getLabel('Update Now', 'సవరించు') : getLabel('Enroll Devotee', 'నమోదు చేయి')}
           </button>
         </div>
       </form>

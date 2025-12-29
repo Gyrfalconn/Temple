@@ -80,30 +80,30 @@ export const ManualDateInput: React.FC<ManualDateInputProps> = ({ value, onChang
 
   return (
     <div className="relative w-full">
-      {label && <label className="text-[10px] font-black text-gray-500 uppercase block mb-1 tracking-widest ml-1">{label}</label>}
+      {label && <label className="text-[8px] font-black text-red-900/40 uppercase block mb-1 tracking-widest ml-1">{label}</label>}
       <div className="relative">
         <input
           type="text"
           inputMode="numeric"
-          placeholder={isEn ? "DD / MM / YYYY" : "తేదీ / నెల / సంవత్సరం"}
-          className={`w-full h-11 px-3 border rounded-xl text-sm bg-orange-50/10 focus:ring-2 outline-none font-bold transition-all shadow-sm pr-10 ${
+          placeholder={isEn ? "DD / MM / YYYY" : "తేదీ / నెల / సం॥"}
+          className={`w-full h-9 px-2 border rounded-lg text-[13px] bg-orange-50/10 focus:ring-1 outline-none font-bold transition-all pr-8 ${
             error ? 'border-red-500 focus:ring-red-500 text-red-950' : 'border-orange-200 focus:ring-orange-800 text-orange-950'
           }`}
           value={formatDisplay(inputValue)}
           onChange={handleChange}
         />
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-          {error && <AlertCircle className="w-4 h-4 text-red-500" />}
-          <CalendarIcon className={`w-4 h-4 text-orange-700 opacity-30 pointer-events-none ${error ? 'hidden' : 'block'}`} />
+        <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+          {error && <AlertCircle className="w-3.5 h-3.5 text-red-500" />}
+          <CalendarIcon className={`w-3.5 h-3.5 text-orange-700 opacity-30 pointer-events-none ${error ? 'hidden' : 'block'}`} />
         </div>
       </div>
       {error ? (
-        <span className="text-[8px] text-red-500 font-bold mt-1 ml-1 uppercase">{error}</span>
-      ) : inputValue.length > 0 && inputValue.length < 8 && (
-        <span className="text-[8px] text-orange-400 font-bold mt-1 ml-1 uppercase">
-          {isEn ? "Enter full date" : "పూర్తి తేదీని నమోదు చేయండి"}
+        <span className="text-[7px] text-red-500 font-bold mt-0.5 ml-1 uppercase block leading-none">{error}</span>
+      ) : inputValue.length > 0 && inputValue.length < 8 ? (
+        <span className="text-[7px] text-orange-400 font-bold mt-0.5 ml-1 uppercase block leading-none">
+          {isEn ? "Finish Date" : "పూర్తి తేదీ"}
         </span>
-      )}
+      ) : null}
     </div>
   );
 };

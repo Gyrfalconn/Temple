@@ -9,9 +9,10 @@ interface ManualDateInputProps {
   onChange: (date: string) => void;
   label: string;
   language: Language;
+  allowFuture?: boolean; // New prop to toggle anti-future logic
 }
 
-export const ManualDateInput: React.FC<ManualDateInputProps> = ({ value, onChange, label, language }) => {
+export const ManualDateInput: React.FC<ManualDateInputProps> = ({ value, onChange, label, language, allowFuture = false }) => {
   const isEn = language === 'en';
   const todayStr = getLocalISOString(new Date());
   
@@ -64,10 +65,17 @@ export const ManualDateInput: React.FC<ManualDateInputProps> = ({ value, onChang
         return;
       }
 
-      const isoDate = `${y}-${m}-${d}`;
+      // Check for valid days in specific months (simple check)
+      const maxDays = new Date(year, month, 0).getDate();
+      if (day > maxDays) {
+        setError(isEn ? "Invalid day for month" : "ఈ నెలకు చెల్లని తేదీ");
+        return;
+      }
+
+      const isoDate = `${y}-${m.toString().padStart(2, '0')}-${d.toString().padStart(2, '0')}`;
       
-      // Future date check
-      if (isoDate > todayStr) {
+      // Anti-Future Logic: Conditional check
+      if (!allowFuture && isoDate > todayStr) {
         setError(isEn ? "Future date not allowed" : "భవిష్యత్తు తేదీ అనుమతించబడదు");
         return;
       }

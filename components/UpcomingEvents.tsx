@@ -266,9 +266,32 @@ export const UpcomingEvents: React.FC<UpcomingEventsProps> = ({ devotees, langua
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {searchMode === 'single' ? (
-                <div className="sm:col-span-1"><ManualDateInput label={getLabel('Select Day', 'తేదీని ఎంచుకోండి')} value={singleDate} language={language} onChange={setSingleDate} /></div>
+                <div className="sm:col-span-1">
+                  <ManualDateInput 
+                    label={getLabel('Select Day', 'తేదీని ఎంచుకోండి')} 
+                    value={singleDate} 
+                    language={language} 
+                    onChange={setSingleDate} 
+                    allowFuture={true} // Allow searching for future events
+                  />
+                </div>
               ) : (
-                <><ManualDateInput label={getLabel('From Date', 'ప్రారంభ తేదీ')} value={startDate} language={language} onChange={setStartDate} /><ManualDateInput label={getLabel('To Date', 'ముగింపు తేదీ')} value={endDate} language={language} onChange={setEndDate} /></>
+                <>
+                  <ManualDateInput 
+                    label={getLabel('From Date', 'ప్రారంభ తేదీ')} 
+                    value={startDate} 
+                    language={language} 
+                    onChange={setStartDate} 
+                    allowFuture={true} // Allow future dates for range search
+                  />
+                  <ManualDateInput 
+                    label={getLabel('To Date', 'ముగింపు తేదీ')} 
+                    value={endDate} 
+                    language={language} 
+                    onChange={setEndDate} 
+                    allowFuture={true} // Allow future dates for range search
+                  />
+                </>
               )}
             </div>
           </div>

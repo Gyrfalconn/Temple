@@ -1,6 +1,8 @@
 
-import { Devotee } from '../types';
-import { STORAGE_KEY, MOCK_DEVOTEES } from '../constants';
+import { Devotee, TempleSettings } from '../types';
+import { STORAGE_KEY, TEMPLE_NAME_TE, TEMPLE_SUB_NAME_TE, TEMPLE_ADDRESS_TE, TEMPLE_TAGLINE_TE } from '../constants';
+
+const SETTINGS_KEY = 'temple_settings_data';
 
 const generateId = () => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
@@ -11,11 +13,7 @@ const generateId = () => {
 
 export const getDevotees = (): Devotee[] => {
   const data = localStorage.getItem(STORAGE_KEY);
-  if (!data || JSON.parse(data).length === 0) {
-    // If empty, seed with mock data
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(MOCK_DEVOTEES));
-    return MOCK_DEVOTEES as unknown as Devotee[];
-  }
+  if (!data) return [];
   try {
     const parsed: any[] = JSON.parse(data);
     return parsed.map(d => ({
@@ -45,6 +43,23 @@ export const deleteDevotee = (id: string): void => {
   const existing = getDevotees();
   const updated = existing.filter(d => d.id !== id);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+};
+
+export const getTempleSettings = (): TempleSettings => {
+  const data = localStorage.getItem(SETTINGS_KEY);
+  if (!data) {
+    return {
+      name: TEMPLE_NAME_TE,
+      subName: TEMPLE_SUB_NAME_TE,
+      address: TEMPLE_ADDRESS_TE,
+      tagline: TEMPLE_TAGLINE_TE
+    };
+  }
+  return JSON.parse(data);
+};
+
+export const saveTempleSettings = (settings: TempleSettings): void => {
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
 };
 
 export { generateId };

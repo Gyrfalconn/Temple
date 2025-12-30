@@ -6,19 +6,21 @@ import { UpcomingEvents } from './components/UpcomingEvents.tsx';
 import { DevoteeForm } from './components/DevoteeForm.tsx';
 import { DevoteeList } from './components/DevoteeList.tsx';
 import { DevoteeDetails } from './components/DevoteeDetails.tsx';
-import { Devotee, ViewState, Language, CallRecord } from './types.ts';
-import { getDevotees, saveDevotee, deleteDevotee, updateDevotee } from './services/storageService.ts';
-import { TEMPLE_NAME_TE, TEMPLE_SUB_NAME_TE, TEMPLE_ADDRESS_TE, TEMPLE_TAGLINE_TE } from './constants.ts';
+import { TempleSettings as ITempleSettings } from './components/TempleSettings.tsx';
+import { Devotee, ViewState, Language, CallRecord, TempleSettings } from './types.ts';
+import { getDevotees, saveDevotee, deleteDevotee, updateDevotee, getTempleSettings, saveTempleSettings } from './services/storageService.ts';
 
 const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('reminders');
   const [language, setLanguage] = useState<Language>('en');
   const [devotees, setDevotees] = useState<Devotee[]>([]);
+  const [settings, setSettings] = useState<TempleSettings>(getTempleSettings());
   const [editingDevotee, setEditingDevotee] = useState<Devotee | null>(null);
   const [selectedDevoteeId, setSelectedDevoteeId] = useState<string | null>(null);
 
   useEffect(() => {
     setDevotees(getDevotees());
+    setSettings(getTempleSettings());
     const savedLang = localStorage.getItem('temple_app_lang');
     if (savedLang === 'en' || savedLang === 'te') {
       setLanguage(savedLang as Language);
@@ -40,7 +42,7 @@ const App: React.FC = () => {
     setView(newView);
   };
 
-  const handleSave = useCallback((devotee: Devotee) => {
+  const handleSaveDevotee = useCallback((devotee: Devotee) => {
     if (editingDevotee) {
       updateDevotee(devotee);
       setDevotees(prev => prev.map(d => d.id === devotee.id ? devotee : d));
@@ -51,6 +53,11 @@ const App: React.FC = () => {
     }
     setView('directory');
   }, [editingDevotee]);
+
+  const handleSaveSettings = (newSettings: TempleSettings) => {
+    saveTempleSettings(newSettings);
+    setSettings(newSettings);
+  };
 
   const handleDelete = useCallback((id: string) => {
     const msg = language === 'en' ? "Are you sure you want to delete this devotee record?" : "ఈ భక్తుని రికార్డును తొలగించాలనుకుంటున్నారా?";
@@ -109,7 +116,13 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#fffaf5] flex flex-col selection:bg-red-600 selection:text-white">
       <div className="no-print">
-        <Header currentView={view} setView={handleSetView} language={language} setLanguage={handleLanguageChange} />
+        <Header 
+          currentView={view} 
+          setView={handleSetView} 
+          language={language} 
+          setLanguage={handleLanguageChange} 
+          settings={settings}
+        />
       </div>
       
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-6 md:py-8">
@@ -142,10 +155,18 @@ const App: React.FC = () => {
           />
         )}
         
+        {view === 'settings' && (
+          <ITempleSettings 
+            settings={settings} 
+            onSave={handleSaveSettings} 
+            language={language} 
+          />
+        )}
+        
         <div className="no-print">
           {view === 'add' && (
             <DevoteeForm 
-              onSave={handleSave} 
+              onSave={handleSaveDevotee} 
               language={language} 
               editingDevotee={editingDevotee} 
               devotees={devotees}
@@ -168,9 +189,9 @@ const App: React.FC = () => {
       <footer className="no-print bg-[#450a0a] text-white border-t border-amber-400/20 px-4" style={{ height: '1.5cm' }}>
         <div className="max-w-[1600px] mx-auto h-full flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-1 md:gap-4">
           <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
-            <span className="text-[10px] md:text-[11px] font-black text-amber-400 font-telugu uppercase tracking-tight leading-none">{TEMPLE_NAME_TE}</span>
+            <span className="text-[10px] md:text-[11px] font-black text-amber-400 font-telugu uppercase tracking-tight leading-none">{settings.name}</span>
             <span className="hidden md:block w-[1px] h-3 bg-white/20"></span>
-            <span className="text-[7px] md:text-[9px] font-medium font-telugu opacity-60 leading-none">{TEMPLE_ADDRESS_TE}</span>
+            <span className="text-[7px] md:text-[9px] font-medium font-telugu opacity-60 leading-none">{settings.address}</span>
           </div>
           <div className="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
             <span className="text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-none">Developed by</span>
@@ -178,14 +199,6 @@ const App: React.FC = () => {
           </div>
         </div>
       </footer>
-
-      <style>{`
-        @media print {
-          .no-print { display: none !important; }
-          body { background: white !important; }
-          main { padding: 0 !important; max-width: 100% !important; }
-        }
-      `}</style>
     </div>
   );
 };
